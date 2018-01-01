@@ -12,6 +12,10 @@ class InboxPresenter(
 
     }
 
+    override fun pause() {
+
+    }
+
     override fun destroy() {
 
     }

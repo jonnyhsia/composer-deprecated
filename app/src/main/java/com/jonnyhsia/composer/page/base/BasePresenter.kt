@@ -16,6 +16,11 @@ interface BasePresenter {
     fun resume()
 
     /**
+     * 暂停
+     */
+    fun pause()
+
+    /**
      * 销毁
      */
     fun destroy()
