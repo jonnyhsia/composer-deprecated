@@ -1,8 +1,7 @@
 package com.jonnyhsia.composer.page.splash
 
 import android.os.CountDownTimer
-import com.jonnyhsia.composer.biz.BaseLogic
-import com.jonnyhsia.composer.biz.Repository
+import com.jonnyhsia.composer.biz.base.Repository
 import com.jonnyhsia.composer.kit.loge
 import com.jonnyhsia.composer.page.base.SimplePresenter
 import com.jonnyhsia.composer.router.Router
@@ -14,9 +13,13 @@ class SplashPresenter(
         val view: SplashContract.View
 ) : SimplePresenter(), SplashContract.Presenter {
 
+    private val disposable = CompositeDisposable()
+
+    /** 计时器, 用于后台数据时间 */
     private val timer: CountDownTimer
 
-    private val disposable = CompositeDisposable()
+    /** 登录/注册页是否通过 */
+    private var isAuthPagePassed = Repository.getConfigRepository().getAuthPageHavePassed()
 
     init {
         view.bindPresenter(this)
@@ -32,16 +35,16 @@ class SplashPresenter(
 
     override fun start() {
         view.render()
-        preloadTimelineData()
+        execDataLoading()
     }
 
     /**
      * 预加载首页数据
      */
-    private fun preloadTimelineData() {
+    private fun execDataLoading() {
         // 开始计时
-        timer.start()
         view.startAnimating()
+        timer.start()
 
         Repository.getHomeRepository().getTimelineData(object : SingleObserver<Any> {
             override fun onSubscribe(d: Disposable) {
@@ -55,7 +58,7 @@ class SplashPresenter(
             override fun onSuccess(t: Any) {
                 // 根据登录情况跳转页面
                 // TODO 未登录也能跳转到主页面
-                view.navigate(if (BaseLogic.checkLogin()) {
+                view.navigate(if (isAuthPagePassed) {
                     "native://${Router.URI_MAIN}"
                 } else {
                     "native://${Router.URI_AUTH}"
@@ -67,6 +70,8 @@ class SplashPresenter(
 
     override fun triggerBonusScene() {
         // TODO: 彩蛋内容
+        view.navigate("native://${Router.URI_AUTH}")
+        view.back()
         view.showMessage("恭喜你 🎉 获得了成为会员的机会")
     }
 

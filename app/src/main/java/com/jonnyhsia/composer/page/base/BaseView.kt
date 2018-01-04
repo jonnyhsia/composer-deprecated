@@ -17,7 +17,7 @@ interface BaseView<in P : BasePresenter> {
     /**
      * 显示信息
      */
-    fun showMessage(message: String, duration: Int = Toast.LENGTH_SHORT)
+    fun showMessage(message: String?, duration: Int = Toast.LENGTH_SHORT)
 
     /**
      * 页面路由

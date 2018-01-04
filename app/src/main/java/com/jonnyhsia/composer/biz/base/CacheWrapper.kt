@@ -1,4 +1,4 @@
-package com.jonnyhsia.composer.biz
+package com.jonnyhsia.composer.biz.base
 
 /**
  * @author JonnyHsia on 18/1/1.

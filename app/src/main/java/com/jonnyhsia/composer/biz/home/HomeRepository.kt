@@ -16,7 +16,12 @@ class HomeRepository : HomeDataSource {
 
     override fun getTimelineData(observer: SingleObserver<Any>) {
         Single.create<Any> {
-            Thread.sleep(0)
+            try {
+                Thread.sleep(4000)
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+
             val data = "hello"
             timelineCache = data
             it.onSuccess(data)

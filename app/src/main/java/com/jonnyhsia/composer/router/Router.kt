@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.ArrayMap
-import com.jonnyhsia.composer.biz.BaseLogic
+import com.jonnyhsia.composer.biz.base.BaseLogic
 import com.jonnyhsia.composer.kit.checkNotEmpty
 import com.jonnyhsia.composer.page.auth.AuthActivity
 import com.jonnyhsia.composer.page.main.MainActivity
@@ -128,21 +128,23 @@ object Router {
     ///////////////////////////////////////////////////////////////////////////
 
     /** 介绍页 */
-    val URI_SHOWCASE = "Showcase"
+    const val URI_SHOWCASE = "Showcase"
     /** 登录注册页 */
-    val URI_AUTH = "Auth"
+    const val URI_AUTH = "Auth"
+    /** 忘记密码 */
+    const val URI_FORGET_PASSWORD = "ForgetPassword"
 
     /** 主页 */
-    val URI_MAIN = "Main"
+    const val URI_MAIN = "Main"
     /** 故事创作, 编辑页 */
-    val URI_CREATE_STORY = "Writing"
+    const val URI_CREATE_STORY = "Writing"
     /** 故事详情页 */
-    val URI_STORY_DETAIL = "StoryDetail"
+    const val URI_STORY_DETAIL = "StoryDetail"
     /** TODO: 公开故事详情页 */
-    val URI_PUBLIC_STORY_DETAIL = "StoryDetail"
+    const val URI_PUBLIC_STORY_DETAIL = "StoryDetail"
     /** TODO: 用户列表 */
-    val URI_USER_LIST = "UserList"
+    const val URI_USER_LIST = "UserList"
 
     /** 推荐的故事 */
-    val URI_RECOMMENDED_STORY = "RecommendedStory"
+    const val URI_RECOMMENDED_STORY = "RecommendedStory"
 }

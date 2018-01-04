@@ -5,34 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".page.auth.login.LoginFragment">
+    tools:context=".page.auth.register.RegisterFragment">
 
     <ImageView
         android:id="@+id/imgIllustration"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:layout_marginEnd="40dp"
-        android:scaleType="fitEnd"
+        android:layout_height="200dp"
+        android:layout_marginBottom="48dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@mipmap/img_illustration_paper_airplane"/>
+        tools:src="@mipmap/img_illustration_write"/>
 
     <com.jonnyhsia.composer.ui.NotoTextView
         android:id="@+id/tvUsername"
         style="@style/Text.InputHint"
         android:layout_marginTop="26dp"
         android:fontFamily="@font/noto_sans_medium"
-        android:text="用户名/账号邮箱"
+        android:text="用户名"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/editUsername"
         style="@style/Input.Auth"
-        android:hint="用户名邮箱都可以"
+        android:hint="独一无二的用户名"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +54,24 @@
         android:letterSpacing="0.15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPassword"
-        tools:text="password"/>
+        app:layout_constraintTop_toBottomOf="@id/tvPassword"/>
+
+    <com.jonnyhsia.composer.ui.NotoTextView
+        android:id="@+id/tvEmail"
+        style="@style/Text.InputHint"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans_medium"
+        android:text="邮箱地址"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editPassword"/>
+
+    <EditText
+        android:id="@+id/editEmail"
+        style="@style/Input.Auth"
+        android:hint="你的邮箱地址"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmail"/>
 
 </android.support.constraint.ConstraintLayout>

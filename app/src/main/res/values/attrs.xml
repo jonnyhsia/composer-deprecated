@@ -10,4 +10,8 @@
         <attr name="disabledColor" format="color|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="NotoTextView">
+        <attr name="stateColors" format="color|reference"/>
+    </declare-styleable>
+
 </resources>

@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt
 import android.support.v4.app.Fragment
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.TypedValue
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.jonnyhsia.composer.app.App
@@ -55,4 +56,11 @@ fun EditText.hideKeyboard() {
     if (imm != null && imm.isActive) {
         imm.hideSoftInputFromWindow(applicationWindowToken, 0)
     }
+}
+
+/**
+ * 调起键盘
+ */
+fun Activity.invokeKeyboard(view: View) {
+    // TODO:
 }

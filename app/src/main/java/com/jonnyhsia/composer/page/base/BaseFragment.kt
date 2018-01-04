@@ -38,7 +38,7 @@ abstract class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
         presenter.destroy()
     }
 
-    override fun showMessage(message: String, duration: Int) {
+    override fun showMessage(message: String?, duration: Int) {
         toast(message, duration)
     }
 
@@ -47,7 +47,7 @@ abstract class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
     }
 
     override fun back() {
-        activity?.onBackPressed()
+        activity?.finish()
     }
 
     override fun router(pageUriString: String) = Router.Builder(context, pageUriString)

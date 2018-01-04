@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import android.support.v4.content.res.ResourcesCompat
 import com.jonnyhsia.composer.BuildConfig
 import com.jonnyhsia.composer.R
-import com.jonnyhsia.composer.biz.Repository
+import com.jonnyhsia.composer.biz.base.Repository
 import com.tencent.bugly.crashreport.CrashReport
 import kotlin.properties.Delegates
 

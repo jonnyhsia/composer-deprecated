@@ -1,7 +1,7 @@
 package com.jonnyhsia.composer.biz.profile.passport
 
 import android.content.Context
-import com.jonnyhsia.composer.biz.BaseLogic
+import com.jonnyhsia.composer.biz.base.BaseLogic
 import com.jonnyhsia.composer.biz.profile.User
 
 /**
@@ -29,6 +29,8 @@ class PassportRepository private constructor() : BaseLogic(), PassportDataSource
                 .putString(PREF_EMAIL, user.email)
                 .putString(PREF_TOKEN, user.token)
                 .apply()
+
+        registeredCaches.forEach { it.invoke() }
     }
 
     override fun logout() {
@@ -54,7 +56,9 @@ class PassportRepository private constructor() : BaseLogic(), PassportDataSource
         /** 已注册的用户敏感的缓存 */
         private val registeredCaches = ArrayList<LogoutCallback>()
 
-        /** 注册用户敏感的缓存信息 */
+        /**
+         * 注册用户敏感的缓存信息
+         */
         fun registerUserSensitiveCache(logoutCallback: LogoutCallback) {
             registeredCaches.add(logoutCallback)
         }

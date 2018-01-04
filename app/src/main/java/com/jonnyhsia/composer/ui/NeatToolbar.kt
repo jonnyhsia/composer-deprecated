@@ -6,7 +6,6 @@ import android.support.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -40,7 +39,7 @@ class NeatToolbar : FrameLayout {
 
     private val actions = ArrayList<Action>(MAX_ACTION_COUNT)
 
-    var leftAction: () -> Unit by Delegates.notNull()
+    var leftAction: (() -> Unit)? = null
 
     constructor(context: Context) : super(context, null)
 
@@ -78,7 +77,12 @@ class NeatToolbar : FrameLayout {
 
         tvLeftTitle.text = leftText
         tvLeftTitle.setTextColor(colorStateList)
-        tvLeftTitle.setOnClickListener { leftAction() }
+        tvLeftTitle.setOnClickListener {
+            leftAction?.invoke()
+        }
+
+        val padding = if (isInEditMode) 24 else UIKit.dp2px(8).toInt()
+        tvLeftTitle.setPaddingRelative(padding, padding, padding, padding)
 
         if (leftIcon != null) {
             val iconSize = UIKit.dp2px(24).toInt()
@@ -99,6 +103,10 @@ class NeatToolbar : FrameLayout {
         colorStateList = ColorStateList(stats, colors)
     }
 
+    fun inflateActions(vararg action: Action) {
+        inflateActions(action.asList())
+    }
+
     fun inflateActions(actionList: List<Action>) {
 
         if (actionList.size > MAX_ACTION_COUNT) {
@@ -110,16 +118,24 @@ class NeatToolbar : FrameLayout {
         actions.forEach { action ->
             val actionView: View
             if (action.actionIcon == null) {
-                actionView = TextView(context)
+                actionView = NotoTextView(context)
                 actionView.setTextColor(colorStateList)
+                actionView.textSize = 16f
                 actionView.text = action.actionText
             } else {
                 actionView = ImageView(context)
                 actionView.imageTintList = colorStateList
-                actionView.setImageResource(action.actionIcon!!)
+                actionView.setImageResource(action.actionIcon)
             }
 
+            action.bindView(actionView)
+
+            val padding = UIKit.dp2px(8).toInt()
+            actionView.setPaddingRelative(padding, padding, padding, padding)
             actionView.setOnClickListener { action.onAction() }
+            actionView.isEnabled = action.initialEnable
+
+            layoutActions.addView(actionView)
         }
     }
 
@@ -127,11 +143,22 @@ class NeatToolbar : FrameLayout {
         tvTitle.text = title
     }
 
-    data class Action(var actionText: String,
-                      @DrawableRes var actionIcon: Int? = null) {
-        var onAction: () -> Unit by Delegates.notNull()
+    data class Action(val actionText: String,
+                      @DrawableRes val actionIcon: Int? = null,
+                      val onAction: () -> Unit,
+                      val initialEnable: Boolean = true) {
 
+        var actionView: View? = null
+            private set
+
+        /**
+         * 绑定对应的 View
+         */
+        fun bindView(view: View) {
+            actionView = view
+        }
     }
+
     companion object {
         private const val MAX_ACTION_COUNT = 3
 

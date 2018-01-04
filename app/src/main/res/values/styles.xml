@@ -21,5 +21,11 @@
 
     </style>
 
+    <style name="TabTextAppearance" parent="android:TextAppearance.DeviceDefault.Medium">
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
 
 </resources>

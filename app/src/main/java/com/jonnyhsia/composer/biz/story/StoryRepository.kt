@@ -1,6 +1,6 @@
 package com.jonnyhsia.composer.biz.story
 
-import com.jonnyhsia.composer.biz.BaseLogic
+import com.jonnyhsia.composer.biz.base.BaseLogic
 
 /**
  * @author JonnyHsia on 17/12/31.

@@ -2,7 +2,9 @@ package com.jonnyhsia.composer.kit
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -11,8 +13,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.jakewharton.rxbinding2.view.RxView
+import com.jonnyhsia.composer.R
+import com.jonnyhsia.composer.router.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
@@ -20,18 +25,18 @@ import java.util.concurrent.TimeUnit
  * @author JonnyHsia on 17/12/31.
  */
 fun Activity.navigate(pageUriString: String) {
-
+    Router.navigate(this, pageUriString)
 }
 
 fun Activity.setWindowBackground(drawable: Drawable?) {
     window.setBackgroundDrawable(drawable)
 }
 
-fun Context.toast(text: String, duration: Int = Toast.LENGTH_SHORT) {
+fun Context.toast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, duration).show()
 }
 
-fun Fragment.toast(text: String, duration: Int = Toast.LENGTH_SHORT) {
+fun Fragment.toast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
     activity?.toast(text, duration)
 }
 
