@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="BUGLY_APPID"
             android:value="${bugly_appid}"/>
@@ -25,7 +24,7 @@
             android:value="${bugly_app_version}"/>
 
         <activity
-            android:name="com.jonnyhsia.composer.page.splash.SplashActivity"
+            android:name=".page.splash.SplashActivity"
             android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,12 +32,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".page.main.MainActivity">
         </activity>
         <activity android:name=".page.notfound.NotFoundActivity">
         </activity>
         <activity android:name=".page.auth.AuthActivity">
+        </activity>
+        <activity android:name=".page.creativework.CreativeWorkActivity">
         </activity>
     </application>
 

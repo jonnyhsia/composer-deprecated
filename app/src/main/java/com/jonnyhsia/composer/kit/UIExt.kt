@@ -46,6 +46,17 @@ fun AppCompatActivity.replaceFragment(@IdRes containerId: Int, fragment: Fragmen
     }
 }
 
+fun FragmentTransaction.addOrShowFragment(@IdRes containerId: Int, fragment: Fragment, tag: String) {
+    if (!fragment.isAdded) {
+        // 添加 Fragment
+        add(containerId, fragment, tag)
+    } else if (fragment.isHidden) {
+        show(fragment)
+    } else {
+        logw("既不添加也不显示 Fragment")
+    }
+}
+
 inline fun FragmentManager.transact(action: FragmentTransaction.() -> Unit) {
     beginTransaction().apply {
         action()

@@ -1,6 +1,7 @@
 package com.jonnyhsia.uilib.widget
 
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,7 +48,7 @@ class BottomNavigation : LinearLayout {
     private var navItems = ArrayList<BottomNavItem>()
     private var navViews = ArrayList<ViewGroup>()
 
-    var activeIndex by Delegates.observable(0, { _, oldValue, newValue ->
+    var activeIndex by Delegates.observable(-1, { _, oldValue, newValue ->
         updateAppearance(oldValue, newValue)
     })
 
@@ -58,7 +59,7 @@ class BottomNavigation : LinearLayout {
         if (primaryEnable) {
             primaryIconRes = typedArray.getResourceId(R.styleable.BottomNavigation_primaryIcon, 0)
             primaryText = typedArray.getString(R.styleable.BottomNavigation_primaryText)
-            primaryNavItem = BottomNavItem(primaryText, primaryIconRes, true)
+            primaryNavItem = BottomNavItem(primaryIconRes, primaryText, true)
         }
         typedArray.recycle()
     }
@@ -119,7 +120,7 @@ class BottomNavigation : LinearLayout {
         for (pos in 0 until navItems.size) {
             val item = navItems[pos]
             LayoutInflater.from(context)
-                .inflate(if (item.isPrimary) R.layout.view_nav_primary else R.layout.view_nav_item, this, true)
+                    .inflate(if (item.isPrimary) R.layout.view_nav_primary else R.layout.view_nav_item, this, true)
             val view = getChildAt(pos)
 
             // 给对应 pos 的 NavView 设置图标和点击事件
@@ -128,11 +129,14 @@ class BottomNavigation : LinearLayout {
                 if (item.isPrimary) {
                     onPrimarySelectListener?.invoke()
                 } else {
+                    val compatPosition = if (primaryEnable && pos > navItems.size / 2) pos - 1 else pos
+                    val compatOldPosition = if (primaryEnable && activeIndex > navItems.size / 2) activeIndex - 1 else activeIndex
+
                     // 判断是否是重复点击
                     if (pos == activeIndex) {
-                        onItemReselectListener?.invoke(pos, item)
+                        onItemReselectListener?.invoke(compatPosition, item)
                     } else {
-                        onItemSelectListener?.invoke(activeIndex, pos, item)
+                        onItemSelectListener?.invoke(compatOldPosition, compatPosition, item)
                         activeIndex = pos
                     }
                 }
@@ -165,16 +169,16 @@ class BottomNavigation : LinearLayout {
     }
 
     private fun updateAppearance(oldIndex: Int, newIndex: Int) {
-        val oldV = navViews[oldIndex]
+        val oldV = navViews.getOrNull(oldIndex)
         val newV = navViews[newIndex]
 
-        for (n in 0 until oldV.childCount) {
-            oldV.getChildAt(n).alpha = 0.38f
+        for (n in 0 until newV.childCount) {
+            oldV?.getChildAt(n)?.alpha = 0.38f
             newV.getChildAt(n).alpha = 1f
         }
     }
 
-    data class BottomNavItem(var title: String?,
-                             var res: Int,
+    data class BottomNavItem(var res: Int,
+                             var title: String? = null,
                              var isPrimary: Boolean = false)
 }

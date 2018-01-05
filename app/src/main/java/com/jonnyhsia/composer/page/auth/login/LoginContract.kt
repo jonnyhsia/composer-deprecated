@@ -20,6 +20,7 @@ interface LoginContract {
     }
 
     interface View : BaseView<Presenter> {
+
         /** 初始化页面渲染 */
         fun render()
 
@@ -32,9 +33,7 @@ interface LoginContract {
         /** 登录 */
         fun loginAction()
 
-        /**
-         * 显示账号密码错误
-         */
+        /** 显示账号密码错误 */
         fun showPasswordError()
     }
 }

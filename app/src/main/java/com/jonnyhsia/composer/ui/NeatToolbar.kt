@@ -3,6 +3,7 @@ package com.jonnyhsia.composer.ui
 import android.content.Context
 import android.content.res.ColorStateList
 import android.support.annotation.DrawableRes
+import android.support.v4.content.res.ResourcesCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -119,6 +120,7 @@ class NeatToolbar : FrameLayout {
             val actionView: View
             if (action.actionIcon == null) {
                 actionView = NotoTextView(context)
+                actionView.typeface = ResourcesCompat.getFont(context, R.font.noto_sans_medium)
                 actionView.setTextColor(colorStateList)
                 actionView.textSize = 16f
                 actionView.text = action.actionText

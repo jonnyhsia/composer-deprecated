@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setWindowBackground(ColorDrawable(Color.parseColor("#FFFFFF")))
-        setContentView(R.layout.activity_splash)
+        setContentView(R.layout.activity_common)
 
         val fragment = SplashFragment().also { SplashPresenter(it) }
         replaceFragment(R.id.container, fragment, "splash")

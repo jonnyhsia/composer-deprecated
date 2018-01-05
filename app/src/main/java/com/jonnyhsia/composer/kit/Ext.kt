@@ -14,6 +14,10 @@ fun Any.loge(message: String?, tag: String = javaClass.simpleName, e: Throwable?
     Log.e(tag, message, e)
 }
 
+fun Any.logw(message: String?, tag: String = javaClass.simpleName) {
+    Log.w(tag, message)
+}
+
 fun String?.checkEmpty() = this == null || length == 0
 
 fun String?.checkNotEmpty() = !checkEmpty()
