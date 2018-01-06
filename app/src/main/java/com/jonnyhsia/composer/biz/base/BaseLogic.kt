@@ -86,7 +86,7 @@ open class BaseLogic {
             return PassportRepository.instance().getLoginUser()
         }
 
-        fun getUserId(): String? {
+        fun getUsername(): String? {
             checkInitialize()
             return PassportRepository.instance().getUserId()
         }

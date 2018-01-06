@@ -4,6 +4,10 @@ class InboxPresenter(
         private val view: InboxContract.View)
     : InboxContract.Presenter {
 
+    init {
+        view.bindPresenter(this)
+    }
+
     override fun start() {
 
     }

@@ -22,7 +22,8 @@ object RxHttpHandler {
         return ObservableTransformer { upstream ->
             upstream.flatMap(Function<Response<T>, ObservableSource<T>> { response ->
                 if (response.code != 0) {
-                    return@Function Observable.error(AppError.REQUEST_FAILED.exception)
+                    return@Function Observable.error(AppError.codeOfException(response.code)
+                            ?: IllegalStateException(response.message))
                 }
                 if (checkNull && response.data == null) {
                     return@Function Observable.error(AppError.REQUEST_FAILED_UNEXPECTED.exception)
@@ -42,7 +43,8 @@ object RxHttpHandler {
             upstream.flatMap(Function<Response<T>, SingleSource<T>> { response ->
                 // 处理 response 的各个状态，返回各类的错误到下游
                 if (response.code != 0) {
-                    return@Function Single.error(AppError.codeOfException(response.code))
+                    return@Function Single.error(AppError.codeOfException(response.code)
+                            ?: IllegalStateException(response.message))
                 }
                 if (checkNull && response.data == null) {
                     return@Function Single.error(AppError.REQUEST_FAILED_UNEXPECTED.exception)

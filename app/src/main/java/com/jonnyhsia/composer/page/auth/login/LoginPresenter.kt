@@ -29,7 +29,6 @@ class LoginPresenter(
                 },
                 onLoginSuccess = { user ->
                     Repository.getPassportRepository().login(user)
-                    Repository.getConfigRepository().markHavePassedAuthPage()
                     view.navigate("native://${Router.URI_MAIN}")
                     view.back()
                 },

@@ -1,6 +1,7 @@
 package com.jonnyhsia.uilib.widget
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
@@ -176,6 +177,23 @@ class BottomNavigation : LinearLayout {
             oldV?.getChildAt(n)?.alpha = 0.38f
             newV.getChildAt(n).alpha = 1f
         }
+    }
+
+    /** 销毁时保存 Index 数据 */
+    override fun onSaveInstanceState(): Parcelable {
+        val bundle = Bundle()
+        val superData = super.onSaveInstanceState()
+        bundle.putParcelable("super_data", superData)
+        bundle.putInt("index", activeIndex)
+        return bundle
+    }
+
+    /** 恢复 Index 数据 */
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val bundle = state as Bundle
+        val superData: Parcelable? = bundle.getParcelable("super_data")
+        activeIndex = bundle.getInt("index", 0)
+        super.onRestoreInstanceState(superData)
     }
 
     data class BottomNavItem(var res: Int,

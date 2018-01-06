@@ -3,6 +3,7 @@ package com.jonnyhsia.composer.page.auth.register
 import com.jonnyhsia.composer.biz.base.Repository
 import com.jonnyhsia.composer.kit.logd
 import com.jonnyhsia.composer.page.base.SimplePresenter
+import com.jonnyhsia.composer.router.Router
 import io.reactivex.disposables.CompositeDisposable
 
 class RegisterPresenter(
@@ -21,6 +22,10 @@ class RegisterPresenter(
     }
 
     override fun clickRegister(username: String, password: String, email: String) {
+        if (username.isBlank() || password.isBlank() || email.isBlank()) {
+            return
+        }
+
         Repository.getProfileRepository().register(username, password, email,
                 onSubscribe = {
                     view.showLoading()
@@ -28,7 +33,9 @@ class RegisterPresenter(
                 },
                 onRegisterSuccess = { user ->
                     Repository.getPassportRepository().login(user)
-                    logd("${user.username}, 欢迎来到 Composer.")
+                    view.showMessage("${user.username}, 欢迎来到 Composer.")
+                    view.navigate("native://${Router.URI_MAIN}")
+                    view.back()
                 },
                 onFailed = {
                     view.showMessage(it)

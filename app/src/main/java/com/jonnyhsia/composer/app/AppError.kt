@@ -12,7 +12,7 @@ enum class AppError(val exception: AppException) {
     INCORRECT_FRAGMENT_POS(AppException(998, "错误的 Fragment Position")),
 
     // 网络请求异常
-    REQUEST_FAILED(AppException(1, "服务器内部错误")),
+    // REQUEST_FAILED(AppException(1, "服务器内部错误")),
     REQUEST_FAILED_UNEXPECTED(AppException(2, "网络异常")),
     UNAVAILABLE_NETWORK(AppException(10, "网络不可用")),
 

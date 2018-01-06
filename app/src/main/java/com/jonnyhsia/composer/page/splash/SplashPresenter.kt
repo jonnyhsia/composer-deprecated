@@ -2,12 +2,17 @@ package com.jonnyhsia.composer.page.splash
 
 import android.os.CountDownTimer
 import com.jonnyhsia.composer.biz.base.Repository
+import com.jonnyhsia.composer.kit.logd
 import com.jonnyhsia.composer.kit.loge
 import com.jonnyhsia.composer.page.base.SimplePresenter
 import com.jonnyhsia.composer.router.Router
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
+import kotlin.math.max
 
 class SplashPresenter(
         val view: SplashContract.View
@@ -43,29 +48,36 @@ class SplashPresenter(
      */
     private fun execDataLoading() {
         // 开始计时
-        view.startAnimating()
+        val startTime = System.currentTimeMillis()
         timer.start()
+        view.startAnimating()
 
-        Repository.getHomeRepository().getTimelineData(object : SingleObserver<Any> {
-            override fun onSubscribe(d: Disposable) {
-                disposable.add(d)
-            }
+        Repository.getHomeRepository().getTimelineData(
+                onSubscribe = { disposable.add(it) },
+                getTimelineDataSuccess = {
+                    view.showMessage("O捷豹K")
+                },
+                onFailed = {
+                    view.showMessage(it)
+                },
+                onFinally = {
+                    enjoySplashScreen(requestTime = System.currentTimeMillis() - startTime)
+                }
+        )
+    }
 
-            override fun onError(e: Throwable) {
-                loge(e.message)
-            }
-
-            override fun onSuccess(t: Any) {
-                // 根据登录情况跳转页面
-                // TODO 未登录也能跳转到主页面
-                view.navigate(if (isAuthPagePassed) {
-                    "native://${Router.URI_MAIN}"
-                } else {
-                    "native://${Router.URI_AUTH}"
+    /** 欣赏至少 3s 的动画 */
+    private fun enjoySplashScreen(requestTime: Long) {
+        disposable.add(Observable.timer(maxOf(0, 1500 - requestTime), TimeUnit.MILLISECONDS)
+                .subscribe {
+                    // 根据登录情况跳转页面
+                    view.navigate(if (isAuthPagePassed) {
+                        "native://${Router.URI_MAIN}"
+                    } else {
+                        "native://${Router.URI_AUTH}"
+                    })
+                    view.back()
                 })
-                view.back()
-            }
-        })
     }
 
     override fun triggerBonusScene() {

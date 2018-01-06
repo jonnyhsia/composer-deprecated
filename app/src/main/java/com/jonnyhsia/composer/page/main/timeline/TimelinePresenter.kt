@@ -6,6 +6,10 @@ class TimelinePresenter(
         val view: TimelineContract.View
 ) : SimplePresenter(), TimelineContract.Presenter {
 
+    init {
+        view.bindPresenter(this)
+    }
+
     override fun start() {
         loadTimelineData()
     }

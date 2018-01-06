@@ -2,6 +2,7 @@ package com.jonnyhsia.composer.biz.profile.passport
 
 import android.content.Context
 import com.jonnyhsia.composer.biz.base.BaseLogic
+import com.jonnyhsia.composer.biz.base.Repository
 import com.jonnyhsia.composer.biz.profile.User
 
 /**
@@ -29,6 +30,8 @@ class PassportRepository private constructor() : BaseLogic(), PassportDataSource
                 .putString(PREF_EMAIL, user.email)
                 .putString(PREF_TOKEN, user.token)
                 .apply()
+
+        Repository.getConfigRepository().markHavePassedAuthPage()
 
         registeredCaches.forEach { it.invoke() }
     }

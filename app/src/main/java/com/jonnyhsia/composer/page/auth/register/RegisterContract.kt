@@ -28,5 +28,11 @@ interface RegisterContract {
 
         /** 完成请求 */
         fun stopLoading()
+
+        fun showEmailError()
+
+        fun showPasswordError()
+
+        fun showUsernameError()
     }
 }

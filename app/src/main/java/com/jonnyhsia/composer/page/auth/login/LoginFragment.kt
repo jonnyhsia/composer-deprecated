@@ -52,15 +52,15 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
     override fun showLoading() {
         alphaAnim.start()
 
-        editUsername.isEnabled = false
-        editPassword.isEnabled = false
+        // editUsername.isEnabled = false
+        // editPassword.isEnabled = false
     }
 
     override fun stopLoading() {
         alphaAnim.cancel()
         imgIllustration.alpha = 1f
 
-        editUsername.isEnabled = true
-        editPassword.isEnabled = true
+        // editUsername.isEnabled = true
+        // editPassword.isEnabled = true
     }
 }

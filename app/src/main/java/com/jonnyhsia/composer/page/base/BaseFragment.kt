@@ -3,6 +3,7 @@ package com.jonnyhsia.composer.page.base
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.Toast
+import com.jonnyhsia.composer.kit.loge
 import com.jonnyhsia.composer.kit.toast
 import com.jonnyhsia.composer.router.Router
 import kotlin.properties.Delegates
@@ -13,6 +14,10 @@ import kotlin.properties.Delegates
 abstract class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
 
     var presenter by Delegates.notNull<T>()
+
+    init {
+        retainInstance = true
+    }
 
     override fun bindPresenter(presenter: T) {
         this.presenter = presenter
@@ -39,7 +44,9 @@ abstract class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
     }
 
     override fun showMessage(message: String?, duration: Int) {
-        toast(message, duration)
+        if (message?.isNotBlank() == true) {
+            toast(message, duration)
+        }
     }
 
     override fun navigate(pageUriString: String) {

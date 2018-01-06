@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.jakewharton.rxbinding2.view.RxView
@@ -62,6 +63,8 @@ inline fun FragmentManager.transact(action: FragmentTransaction.() -> Unit) {
         action()
     }.commit()
 }
+
+fun EditText.takeText() = text.toString()
 
 /**
  * 通过 [RxView] 实现的 View 的多次点击事件

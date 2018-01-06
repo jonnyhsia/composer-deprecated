@@ -7,8 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.ArrayMap
+import com.jonnyhsia.composer.BuildConfig
 import com.jonnyhsia.composer.biz.base.BaseLogic
 import com.jonnyhsia.composer.kit.checkNotEmpty
+import com.jonnyhsia.composer.kit.loge
 import com.jonnyhsia.composer.page.auth.AuthActivity
 import com.jonnyhsia.composer.page.main.MainActivity
 import com.jonnyhsia.composer.page.notfound.NotFoundActivity
@@ -31,6 +33,16 @@ object Router {
         }
         // 解析 Uri 字符串并根据协议跳转到不同类型的 Activity
         val uri = Uri.parse(pageUriString) ?: return
+
+        if (uri.scheme == null || uri.host == null) {
+            if (BuildConfig.DEBUG) {
+                throw IllegalArgumentException("跳转的 URI 有误")
+            } else {
+                loge("跳转的 URI 有误")
+            }
+            return
+        }
+
         when (uri.scheme) {
             "native" -> startActivityWithNativeUri(context, uri, flag)
             "http", "https" -> startActivityWithUrl(context, uri)

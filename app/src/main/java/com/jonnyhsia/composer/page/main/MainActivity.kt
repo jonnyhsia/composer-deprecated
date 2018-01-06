@@ -3,11 +3,15 @@ package com.jonnyhsia.composer.page.main
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.jonnyhsia.composer.R
+import com.jonnyhsia.composer.biz.base.Repository
+import com.jonnyhsia.composer.biz.profile.User
 import com.jonnyhsia.composer.kit.addOrShowFragment
 import com.jonnyhsia.composer.kit.navigate
 import com.jonnyhsia.composer.page.base.DayNightActivity
+import com.jonnyhsia.composer.page.main.discover.DiscoverFragment
 import com.jonnyhsia.composer.page.main.inbox.InboxFragment
 import com.jonnyhsia.composer.page.main.inbox.InboxPresenter
+import com.jonnyhsia.composer.page.main.me.MeFragment
 import com.jonnyhsia.composer.page.main.timeline.TimelineFragment
 import com.jonnyhsia.composer.page.main.timeline.TimelinePresenter
 import com.jonnyhsia.composer.router.Router
@@ -40,7 +44,8 @@ class MainActivity : DayNightActivity() {
                     homePageNavigate(oldPos, pos)
                 }
                 .addItemReselectListener { pos, _ ->
-                    findFragmentByIndex(pos)
+                    Repository.getPassportRepository().login(User(username = "supotato", avatar = "", nickname = ""))
+                    //findFragmentByIndex(pos)
                 }
                 .performClickItem(0)
     }
@@ -57,9 +62,9 @@ class MainActivity : DayNightActivity() {
         if (fragment == null) {
             fragment = when (pos) {
                 0 -> TimelineFragment().also { TimelinePresenter(it) }
-                1 -> Fragment()
+                1 -> DiscoverFragment()
                 2 -> InboxFragment().also { InboxPresenter(it) }
-                3 -> Fragment()
+                3 -> MeFragment()
                 else -> throw IllegalArgumentException("Unexpected index of fragment.")
             }
         }
@@ -76,14 +81,14 @@ class MainActivity : DayNightActivity() {
     private fun homePageNavigate(oldPos: Int, pos: Int) {
         val destination = findFragmentByIndex(pos)
         val xaction = supportFragmentManager.beginTransaction()
-
-        xaction.addOrShowFragment(R.id.container, destination, generateFragmentTag(pos))
+        xaction.setCustomAnimations(R.anim.popup_enter, R.anim.popup_exit)
 
         if (oldPos != -1) {
-            val oldFragment = findFragmentByIndex(pos)
+            val oldFragment = findFragmentByIndex(oldPos)
             xaction.hide(oldFragment)
         }
 
+        xaction.addOrShowFragment(R.id.container, destination, generateFragmentTag(pos))
         xaction.commit()
     }
 

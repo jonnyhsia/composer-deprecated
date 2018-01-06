@@ -7,5 +7,5 @@ data class Story(val storyId: Long,
                  val title: String,
                  val content: String,
                  val author: String,
-                 val images: List<String>,
+                 val images: String,
                  val createTime: Date)

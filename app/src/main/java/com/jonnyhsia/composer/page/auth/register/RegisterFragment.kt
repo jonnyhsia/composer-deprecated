@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.bumptech.glide.Glide
 import com.jonnyhsia.composer.R
+import com.jonnyhsia.composer.kit.takeText
 import com.jonnyhsia.composer.page.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_register.editPassword
-import kotlinx.android.synthetic.main.fragment_register.editUsername
-import kotlinx.android.synthetic.main.fragment_register.imgIllustration
+import kotlinx.android.synthetic.main.fragment_register.*
 
 /**
  * @author JonnyHsia on 18/1/1.
@@ -39,7 +38,7 @@ class RegisterFragment : BaseFragment<RegisterContract.Presenter>(), RegisterCon
     }
 
     override fun registerAction() {
-        presenter.clickRegister("", "", "")
+        presenter.clickRegister(editUsername.takeText(), editPassword.takeText(), editEmail.takeText())
     }
 
     override fun showLoading() {
@@ -56,4 +55,17 @@ class RegisterFragment : BaseFragment<RegisterContract.Presenter>(), RegisterCon
         editUsername.isEnabled = true
         editPassword.isEnabled = true
     }
+
+    override fun showUsernameError() {
+        tvUsername.toggleError()
+    }
+
+    override fun showPasswordError() {
+        tvPassword.toggleError()
+    }
+
+    override fun showEmailError() {
+        tvEmail.toggleError()
+    }
+
 }

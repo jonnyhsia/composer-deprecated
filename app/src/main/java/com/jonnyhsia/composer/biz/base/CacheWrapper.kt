@@ -6,7 +6,7 @@ package com.jonnyhsia.composer.biz.base
 class CacheWrapper<T>(
         private val validRule: (cache: T?, id: String?) -> Boolean = { cache, id ->
             // 缓存与 ID 非空且缓存 ID 对应用户 ID
-            cache != null && id != null && id == BaseLogic.getUserId()
+            cache != null && id != null && id == BaseLogic.getUsername()
         }
 ) {
 
