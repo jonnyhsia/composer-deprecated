@@ -1,6 +1,7 @@
 package com.jonnyhsia.composer.ui
 
 import android.content.Context
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.jonnyhsia.composer.R
@@ -44,6 +45,7 @@ class NotoTextView : AppCompatTextView {
         normalTextColor = currentTextColor
         errorTextColor = colorStateList.getColorForState(intArrayOf(android.R.attr.state_window_focused), R.color.highlight)
         disabledTextColor = colorStateList.getColorForState(intArrayOf(android.R.attr.state_enabled), R.color.textDisable)
+        typeface = ResourcesCompat.getFont(context, R.font.noto_sans_medium)
 
         includeFontPadding = false
     }

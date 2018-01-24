@@ -5,7 +5,7 @@ import com.jonnyhsia.composer.biz.base.OnFinally
 import com.jonnyhsia.composer.biz.base.OnSubscribe
 import com.jonnyhsia.composer.biz.home.entity.TimelineData
 
-typealias GetTimelineDataSuccess = (TimelineData?) -> Unit
+typealias GetTimelineDataSuccess = (TimelineData) -> Unit
 
 interface HomeDataSource {
 

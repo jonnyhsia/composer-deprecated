@@ -5,6 +5,10 @@
         <attr name="highlightTitle" format="string|reference"/>
         <attr name="highlightSubTitle" format="string|reference"/>
         <attr name="icon" format="reference"/>
+        <attr name="dividerVisibility" format="enum">
+            <enum name="SHOW" value="0"/>
+            <enum name="HIDE" value="8"/>
+        </attr>
     </declare-styleable>
 
 </resources>

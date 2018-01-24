@@ -7,11 +7,11 @@ import com.jonnyhsia.composer.page.base.DayNightActivity
 
 class CreativeWorkActivity : DayNightActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_common)
+    override fun getContentLayoutRes() = R.layout.activity_common
 
-        val fragment = CreativeWorkFragment().also { CreativeWorkPresenter() }
+    override fun onContentViewCreated(savedInstanceState: Bundle?) {
+        val fragment = CreativeWorkFragment().also { CreativeWorkPresenter(it) }
         replaceFragment(R.id.container, fragment, "create_story")
     }
+
 }

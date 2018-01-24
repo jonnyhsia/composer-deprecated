@@ -40,6 +40,7 @@
         </activity>
         <activity android:name=".page.creativework.CreativeWorkActivity">
         </activity>
+        <activity android:name=".page.search.SearchActivity"/>
     </application>
 
 </manifest>

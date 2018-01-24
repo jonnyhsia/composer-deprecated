@@ -192,7 +192,7 @@ class BottomNavigation : LinearLayout {
     override fun onRestoreInstanceState(state: Parcelable?) {
         val bundle = state as Bundle
         val superData: Parcelable? = bundle.getParcelable("super_data")
-        activeIndex = bundle.getInt("index", 0)
+        performClickItem(bundle.getInt("index", 0))
         super.onRestoreInstanceState(superData)
     }
 

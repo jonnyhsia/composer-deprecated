@@ -50,9 +50,10 @@
         android:src="@drawable/img_avatar_default"/>
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#eee"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:background="#eee"/>
 
 </FrameLayout>

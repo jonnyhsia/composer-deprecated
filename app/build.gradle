@@ -57,14 +57,20 @@ dependencies {
 
     // glide
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    implementation 'com.android.support:support-v4:26.0.0-beta1'
     kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     // bugly
     implementation "com.tencent.bugly:crashreport:2.6.6.1"
 
     // refresh
-    implementation "com.lcodecorex:tkrefreshlayout:1.0.7"
+    implementation 'me.everything:overscroll-decor-android:1.0.4'
+
+    // status bar color
+    implementation 'com.githang:status-bar-compat:0.7'
+
+    // leak canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

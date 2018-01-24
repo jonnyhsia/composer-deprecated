@@ -2,23 +2,15 @@ package com.jonnyhsia.composer.page.splash
 
 import android.os.CountDownTimer
 import com.jonnyhsia.composer.biz.base.Repository
-import com.jonnyhsia.composer.kit.logd
-import com.jonnyhsia.composer.kit.loge
 import com.jonnyhsia.composer.page.base.SimplePresenter
 import com.jonnyhsia.composer.router.Router
-import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 class SplashPresenter(
         val view: SplashContract.View
 ) : SimplePresenter(), SplashContract.Presenter {
-
-    private val disposable = CompositeDisposable()
 
     /** 计时器, 用于后台数据时间 */
     private val timer: CountDownTimer
@@ -55,26 +47,26 @@ class SplashPresenter(
         Repository.getHomeRepository().getTimelineData(
                 onSubscribe = { disposable.add(it) },
                 getTimelineDataSuccess = {
-                    view.showMessage("O捷豹K")
+                    view.showMessage("预加载完成")
                 },
                 onFailed = {
                     view.showMessage(it)
                 },
                 onFinally = {
-                    enjoySplashScreen(requestTime = System.currentTimeMillis() - startTime)
+                    enjoySplashAnim(requestTime = System.currentTimeMillis() - startTime)
                 }
         )
     }
 
-    /** 欣赏至少 3s 的动画 */
-    private fun enjoySplashScreen(requestTime: Long) {
-        disposable.add(Observable.timer(maxOf(0, 1500 - requestTime), TimeUnit.MILLISECONDS)
+    /** 至少欣赏 2s 的动画 */
+    private fun enjoySplashAnim(requestTime: Long) {
+        disposable.add(Observable.timer(maxOf(0, 2000 - requestTime), TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    // 根据登录情况跳转页面
                     view.navigate(if (isAuthPagePassed) {
-                        "native://${Router.URI_MAIN}"
+                        "page://${Router.URI_MAIN}"
                     } else {
-                        "native://${Router.URI_AUTH}"
+                        "page://${Router.URI_AUTH}"
                     })
                     view.back()
                 })
@@ -82,18 +74,13 @@ class SplashPresenter(
 
     override fun triggerBonusScene() {
         // TODO: 彩蛋内容
-        view.navigate("native://${Router.URI_AUTH}")
+        view.navigate("page://${Router.URI_AUTH}")
         view.back()
-        view.showMessage("恭喜你 🎉 获得了成为会员的机会")
+        view.showMessage("🎉 当当~就是这么简陋的彩蛋~")
     }
 
     override fun pause() {
         timer.cancel()
-    }
-
-    override fun destroy() {
-        super.destroy()
-        disposable.dispose()
     }
 
     companion object {

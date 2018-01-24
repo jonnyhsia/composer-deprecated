@@ -7,4 +7,7 @@
     <string name="action_register">注册</string>
     <string name="action_forget_password">忘记密码</string>
     <string name="action_skip_auth_countdown">跳过(%ds)</string>
+    <string name="search_bar">搜索故事与朋友</string>
+    <string name="transition_search_bar">transition_search_bar</string>
+    <string name="see_more">查看全部</string>
 </resources>

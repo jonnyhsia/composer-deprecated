@@ -13,8 +13,6 @@ class LoginPresenter(
         view.bindPresenter(this)
     }
 
-    private val disposable = CompositeDisposable()
-
     override fun start() {
         super.start()
         view.render()
@@ -29,7 +27,7 @@ class LoginPresenter(
                 },
                 onLoginSuccess = { user ->
                     Repository.getPassportRepository().login(user)
-                    view.navigate("native://${Router.URI_MAIN}")
+                    view.navigate("page://${Router.URI_MAIN}")
                     view.back()
                 },
                 onPasswordNotMatch = {

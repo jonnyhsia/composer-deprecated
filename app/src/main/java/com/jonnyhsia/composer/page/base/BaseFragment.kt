@@ -54,7 +54,7 @@ abstract class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
     }
 
     override fun back() {
-        activity?.finish()
+        activity?.onBackPressed()
     }
 
     override fun router(pageUriString: String) = Router.Builder(context, pageUriString)

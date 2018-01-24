@@ -21,6 +21,7 @@ import com.jonnyhsia.composer.page.auth.login.LoginPresenter
 import com.jonnyhsia.composer.page.auth.register.RegisterContract
 import com.jonnyhsia.composer.page.auth.register.RegisterFragment
 import com.jonnyhsia.composer.page.auth.register.RegisterPresenter
+import com.jonnyhsia.composer.page.base.BaseActivity
 import com.jonnyhsia.composer.router.Router
 import com.jonnyhsia.composer.ui.NeatToolbar
 import kotlinx.android.synthetic.main.activity_auth.btnLoginOrRegister
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_auth.toolbar
 import kotlinx.android.synthetic.main.activity_auth.tvForgetPassword
 import kotlinx.android.synthetic.main.activity_auth.viewPager
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity() {
 
     private var skipTimer: CountDownTimer? = null
 
@@ -49,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
         }
 
         tvForgetPassword.setOnClickListener {
-            navigate("native://${Router.URI_FORGET_PASSWORD}")
+            navigate("page://${Router.URI_FORGET_PASSWORD}")
         }
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -89,7 +90,7 @@ class AuthActivity : AppCompatActivity() {
                 onAction = {
                     // 标记为已经过登录/注册/跳过
                     Repository.getConfigRepository().markHavePassedAuthPage()
-                    navigate("native://${Router.URI_MAIN}")
+                    navigate("page://${Router.URI_MAIN}")
                     finish()
                 })
         toolbar.inflateActions(actionSkip)

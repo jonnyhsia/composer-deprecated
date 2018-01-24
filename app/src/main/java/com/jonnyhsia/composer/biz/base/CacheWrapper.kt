@@ -1,5 +1,7 @@
 package com.jonnyhsia.composer.biz.base
 
+import com.jonnyhsia.composer.kit.Debug
+
 /**
  * @author JonnyHsia on 18/1/1.
  */
@@ -19,6 +21,15 @@ class CacheWrapper<T>(
     fun update(newData: T, newCacheId: String) {
         cache = newData
         cacheId = newCacheId
+    }
+
+    fun take(): T? {
+        return if (isValid()) {
+            cache
+        } else {
+            Debug.e("缓存已经失效")
+            null
+        }
     }
 
     /**

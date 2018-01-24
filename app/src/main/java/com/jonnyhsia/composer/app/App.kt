@@ -6,6 +6,7 @@ import android.support.v4.content.res.ResourcesCompat
 import com.jonnyhsia.composer.BuildConfig
 import com.jonnyhsia.composer.R
 import com.jonnyhsia.composer.biz.base.Repository
+import com.squareup.leakcanary.LeakCanary
 import com.tencent.bugly.crashreport.CrashReport
 import kotlin.properties.Delegates
 
@@ -24,6 +25,8 @@ class App : Application() {
         // Model 的初始化与预加载
         Repository.initialize(this)
 
+        // LeakCanary 与 Bugly 的初始化
+        LeakCanary.install(this)
         initCrashReport()
     }
 

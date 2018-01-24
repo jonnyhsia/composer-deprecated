@@ -2,7 +2,6 @@ package com.jonnyhsia.highlighttoolbar
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -36,6 +35,7 @@ class HighlightToolbar : FrameLayout {
     private var mTvTitle: TextView? = null
     private var mTvSubTitle: TextView? = null
     private var mImgButton: ImageView? = null
+    private var mDivider: View? = null
 
     var mButtonClick: ((View) -> Unit)? = null
 
@@ -56,12 +56,14 @@ class HighlightToolbar : FrameLayout {
         mTvTitle = findViewById(R.id.tvTitle)
         mTvSubTitle = findViewById(R.id.tvSubTitle)
         mImgButton = findViewById(R.id.imgButton)
+        mDivider = findViewById(R.id.divider)
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.HighlightToolbar)
         // 获取自定义控件的属性
         title = typedArray.getString(R.styleable.HighlightToolbar_highlightTitle)
         subTitle = typedArray.getString(R.styleable.HighlightToolbar_highlightSubTitle)
         resource = typedArray.getResourceId(R.styleable.HighlightToolbar_icon, -1)
+        val dividerVisibility = typedArray.getInt(R.styleable.HighlightToolbar_dividerVisibility, View.VISIBLE)
         typedArray.recycle()
 
         /*val underline = resources.getDrawable(R.drawable.underline)
@@ -70,9 +72,18 @@ class HighlightToolbar : FrameLayout {
         mTvTitle?.setCompoundDrawables(null, null, null, underline)
         mTvTitle?.compoundDrawablePadding = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 1f, context.resources.displayMetrics).toInt()*/
+        setDividerVisibility(dividerVisibility)
 
         mImgButton?.setOnClickListener {
             mButtonClick?.invoke(it)
         }
+    }
+
+    fun setIconClickListner(onClick: (View) -> Unit) {
+        mButtonClick = onClick
+    }
+
+    fun setDividerVisibility(visibility: Int) {
+        mDivider?.visibility = visibility
     }
 }

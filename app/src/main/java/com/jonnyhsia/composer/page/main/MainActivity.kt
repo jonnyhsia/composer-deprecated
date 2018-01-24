@@ -1,12 +1,13 @@
 package com.jonnyhsia.composer.page.main
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.jonnyhsia.composer.R
-import com.jonnyhsia.composer.biz.base.Repository
-import com.jonnyhsia.composer.biz.profile.User
 import com.jonnyhsia.composer.kit.addOrShowFragment
 import com.jonnyhsia.composer.kit.navigate
+import com.jonnyhsia.composer.kit.setWindowBackground
 import com.jonnyhsia.composer.page.base.DayNightActivity
 import com.jonnyhsia.composer.page.main.discover.DiscoverFragment
 import com.jonnyhsia.composer.page.main.inbox.InboxFragment
@@ -15,17 +16,18 @@ import com.jonnyhsia.composer.page.main.me.MeFragment
 import com.jonnyhsia.composer.page.main.timeline.TimelineFragment
 import com.jonnyhsia.composer.page.main.timeline.TimelinePresenter
 import com.jonnyhsia.composer.router.Router
+import com.jonnyhsia.composer.ui.Scroll2Top
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.bottomNavigation
 
 class MainActivity : DayNightActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+    override fun onContentViewCreated(savedInstanceState: Bundle?) {
+        setWindowBackground(ColorDrawable(Color.WHITE))
         setUpBottomNavigation()
     }
+
+    override fun getContentLayoutRes() = R.layout.activity_main
 
     /** 设置底部导航栏 */
     private fun setUpBottomNavigation() {
@@ -38,14 +40,14 @@ class MainActivity : DayNightActivity() {
 
         bottomNavigation.setNavItems(navItems)
                 .addPrimarySelectListener {
-                    navigate("native://${Router.URI_CREATE_STORY}")
+                    navigate("page://${Router.URI_COMPOSE}")
                 }
                 .addItemSelectListener { oldPos, pos, _ ->
                     homePageNavigate(oldPos, pos)
                 }
                 .addItemReselectListener { pos, _ ->
-                    Repository.getPassportRepository().login(User(username = "supotato", avatar = "", nickname = ""))
-                    //findFragmentByIndex(pos)
+                    // Repository.getPassportRepository().login(User(username = "supotato", avatar = "", nickname = ""))
+                    (findFragmentByIndex(pos) as? Scroll2Top)?.scroll()
                 }
                 .performClickItem(0)
     }

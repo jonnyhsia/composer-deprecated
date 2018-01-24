@@ -14,4 +14,11 @@ data class Mapping(val schema: String = "native",
                    val paramKeys: List<String>? = null,
                    val requestCode: Int? = null,
                    val flag: Int? = null,
-                   val mustLogin: Boolean = false)
+                   val mustLogin: Boolean = false,
+                   val interceptor: Interceptor? = null) {
+
+    class Interceptor(val destination: String,
+                      val predicate: () -> Boolean,
+                      val negativeDestination: String? = null)
+
+}
